@@ -1,0 +1,33 @@
+@model int
+
+@{
+    ViewData["Title"] = "Account Created";
+    bool isAdmin = User.IsInRole("SystemAdministrator");
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">@(isAdmin ? "Employee Created" : "Registration Complete")</h1>
+    <p class="text-muted mb-4">@(isAdmin ? "The new employee account has been created." : "Your employee account has been created.")</p>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body text-center py-5">
+            <p class="text-muted small mb-2">@(isAdmin ? "New Employee ID" : "Your Employee ID")</p>
+            <p class="display-3 fw-bold mb-3">@Model</p>
+            <p class="text-muted">
+                @(isAdmin ? "Please provide this ID to the employee for login." : "Please keep this ID. You will use it to log in.")
+            </p>
+        </div>
+    </div>
+
+    <div>
+        @if (isAdmin)
+        {
+            <a asp-controller="SystemAdmin" asp-action="CreateEmployee" class="btn btn-dark me-2">Create Another</a>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-dark">Back to Home</a>
+        }
+        else
+        {
+            <a asp-action="Login" class="btn btn-dark">Go to Login</a>
+        }
+    </div>
+</div>

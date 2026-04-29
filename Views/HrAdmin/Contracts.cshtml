@@ -1,0 +1,136 @@
+@using HRMS.ViewModels
+@model ContractsDashboardViewModel
+@{
+    ViewData["Title"] = "Contracts Dashboard";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-light mb-1">Contract Overview</h1>
+            <p class="text-muted mb-0">Manage employee contracts and track expirations.</p>
+        </div>
+        <a asp-action="CreateContract" class="btn btn-dark">Create New Contract</a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    @* Tabs *@
+    <ul class="nav nav-tabs mb-4" id="contractsTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="active-tab" data-bs-toggle="tab" data-bs-target="#active" type="button" role="tab">Active Contracts</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="expiring-tab" data-bs-toggle="tab" data-bs-target="#expiring" type="button" role="tab">Expiring Soon</button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="contractsTabContent">
+        @* Active Contracts Tab *@
+        <div class="tab-pane fade show active" id="active" role="tabpanel">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>Type</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.ActiveContracts.Any())
+                                {
+                                    foreach (var contract in Model.ActiveContracts)
+                                    {
+                                        <tr>
+                                            <td class="fw-bold">@contract.EmployeeName</td>
+                                            <td><span class="badge bg-dark">@contract.ContractType</span></td>
+                                            <td>@contract.StartDate.ToShortDateString()</td>
+                                            <td>@contract.EndDate.ToShortDateString()</td>
+                                            <td><span class="badge bg-dark">Active</span></td>
+                                            <td>
+                                                <a asp-action="EditProfile" asp-route-id="@contract.EmployeeID" class="btn btn-sm btn-outline-dark">View Profile</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr><td colspan="6" class="text-center text-muted py-4">No active contracts found.</td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* Expiring Contracts Tab *@
+        <div class="tab-pane fade" id="expiring" role="tabpanel">
+            <div class="card shadow-sm border-0 mb-3">
+                <div class="card-body py-2">
+                    <form method="get" class="d-flex align-items-center gap-2">
+                        <label class="mb-0 small text-muted">Expiring in (days):</label>
+                        <input type="number" name="days" value="@Model.ExpiringDaysFilter" class="form-control form-control-sm" style="width: 80px;" />
+                        <button class="btn btn-sm btn-dark" type="submit">Filter</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>Type</th>
+                                    <th>Ends On</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.ExpiringContracts.Any())
+                                {
+                                    foreach (var contract in Model.ExpiringContracts)
+                                    {
+                                        <tr>
+                                            <td class="fw-bold">@contract.EmployeeName</td>
+                                            <td>@contract.ContractType</td>
+                                            <td><strong>@contract.EndDate.ToShortDateString()</strong></td>
+                                            <td>
+                                                <form asp-action="RenewContract" method="post" class="d-flex gap-2">
+                                                    <input type="hidden" name="contractID" value="@contract.ContractID" />
+                                                    <input type="hidden" name="returnUrl" value="Contracts" />
+                                                    <input type="date" name="newEndDate" class="form-control form-control-sm" required 
+                                                           value="@contract.EndDate.AddYears(1).ToString("yyyy-MM-dd")" style="width: 140px;" />
+                                                    <button type="submit" class="btn btn-sm btn-dark">Renew</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr><td colspan="4" class="text-center text-muted py-4">No contracts expiring in @Model.ExpiringDaysFilter days.</td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

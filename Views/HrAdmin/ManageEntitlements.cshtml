@@ -1,0 +1,39 @@
+@model List<DTOs.EmployeeSummaryDTO>
+@{
+    ViewData["Title"] = "Manage Leave Entitlements";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Leave Entitlements</h1>
+    <p class="text-muted mb-4">Select an employee to manage their leave entitlements.</p>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Department</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="fw-bold">@item.FullName</td>
+                                <td class="text-muted">@item.PositionTitle</td>
+                                <td>@item.DepartmentName</td>
+                                <td>
+                                    <a asp-action="EditEntitlements" asp-route-id="@item.EmployeeID" class="btn btn-dark btn-sm">Manage</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

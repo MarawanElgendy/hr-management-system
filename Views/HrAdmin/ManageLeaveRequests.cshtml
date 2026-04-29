@@ -1,0 +1,98 @@
+@model List<HRMS.Models.LeaveRequest>
+@{
+    ViewData["Title"] = "Manage Leave Requests";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Leave Overrides</h1>
+    <p class="text-muted mb-4">Override leave request decisions when necessary.</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Start Date</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="fw-bold">
+                                    @if(item.Employee != null) { @item.Employee.FullName } else { <span class="text-muted">Unknown</span> }
+                                </td>
+                                <td>@item.StartDate.ToString("yyyy-MM-dd")</td>
+                                <td>@item.LeaveType.TypeName</td>
+                                <td>
+                                    @if(item.Status == "Approved")
+                                    {
+                                        <span class="badge bg-dark">Approved</span>
+                                    }
+                                    else if(item.Status == "Rejected")
+                                    {
+                                        <span class="badge bg-light text-dark border">Rejected</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-light text-dark border">Pending</span>
+                                    }
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#overrideModal-@item.LeaveRequestId">Override</button>
+
+                                    @* Modal *@
+                                    <div class="modal fade" id="overrideModal-@item.LeaveRequestId" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title fw-bold">Override Request #@item.LeaveRequestId</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <form asp-action="OverrideRequest" method="post">
+                                                    <div class="modal-body">
+                                                        <input type="hidden" name="requestId" value="@item.LeaveRequestId" />
+                                                        <div class="mb-3">
+                                                            <label class="form-label small text-muted">New Status</label>
+                                                            <select name="newStatus" class="form-select">
+                                                                <option value="Approved">Approve</option>
+                                                                <option value="Rejected">Reject</option>
+                                                                <option value="Pending">Reset to Pending</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label small text-muted">Reason for Override</label>
+                                                            <textarea name="reason" class="form-control" rows="3" required></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-dark">Confirm Override</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Contracts";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-5 fw-light">Contracts</h1>
+
+    @if (!User.IsInRole("HRAdministrator"))
+    {
+        <div class="alert alert-info border-black">
+            Access Restricted: Only HR Administrators can view this page.
+        </div>
+    }
+    else
+    {
+        @* Management Section *@
+        <h4 class="mb-3 fw-normal">Management</h4>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Contract Overview</h5>
+                        <p class="card-text text-muted small">View status and details of all employee contracts.</p>
+                        <a asp-controller="HRAdmin" asp-action="Contracts" class="btn btn-dark w-100 stretched-link">View</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Issue Contract</h5>
+                        <p class="card-text text-muted small">Draft and finalize a new employment contract.</p>
+                        <a asp-controller="HRAdmin" asp-action="CreateContract" class="btn btn-dark w-100 stretched-link">Create</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,104 @@
+@{
+    ViewData["Title"] = "Assign Shifts";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Batch Assignment</h1>
+    <p class="text-muted mb-4">Assign shifts to multiple employees or departments at once.</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <form asp-action="AssignShift" method="post">
+                
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label small text-muted">Start Date</label>
+                        <input type="date" name="startDate" class="form-control" required />
+                    </div>
+                    <div class="col">
+                        <label class="form-label small text-muted">End Date</label>
+                        <input type="date" name="endDate" class="form-control" required />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small text-muted">Shift Name</label>
+                    <select name="shiftType" class="form-select" required>
+                        <option value="">Select Scheduled Shift</option>
+                        @if (ViewBag.ShiftNames != null)
+                        {
+                            @foreach (var name in ViewBag.ShiftNames)
+                            {
+                                <option value="@name">@name</option>
+                            }
+                        }
+                    </select>
+                    <div class="form-text">Select the exact Shift Name created by HR.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small text-muted">Target Type</label>
+                    <select id="targetType" name="targetType" class="form-select" onchange="toggleTarget()" required>
+                        <option value="Employee">Single Employee</option>
+                        <option value="Department">Entire Department</option>
+                    </select>
+                </div>
+
+                <div class="mb-3" id="employeeDiv">
+                    <label class="form-label small text-muted">Employee</label>
+                    <select name="employeeID" class="form-select">
+                        <option value="">Select Employee</option>
+                        @if (ViewBag.Employees != null)
+                        {
+                            @foreach (var emp in ViewBag.Employees)
+                            {
+                                <option value="@emp.EmployeeID">@emp.FullName (@emp.PositionTitle)</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-4 d-none" id="departmentDiv">
+                    <label class="form-label small text-muted">Department</label>
+                    <select name="departmentID" class="form-select">
+                        <option value="">Select Department</option>
+                        @if (ViewBag.Departments != null)
+                        {
+                            @foreach (var dept in ViewBag.Departments)
+                            {
+                                <option value="@dept.DepartmentId">@dept.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-dark">Assign Shifts</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleTarget() {
+        var type = document.getElementById("targetType").value;
+        var empDiv = document.getElementById("employeeDiv");
+        var deptDiv = document.getElementById("departmentDiv");
+
+        if (type === "Employee") {
+            empDiv.classList.remove("d-none");
+            deptDiv.classList.add("d-none");
+        } else {
+            empDiv.classList.add("d-none");
+            deptDiv.classList.remove("d-none");
+        }
+    }
+</script>

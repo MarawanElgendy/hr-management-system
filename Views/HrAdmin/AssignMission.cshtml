@@ -1,0 +1,75 @@
+@using DTOs
+@{
+    ViewData["Title"] = "Assign Mission";
+    var employees = ViewBag.Employees as List<EmployeeSummaryDTO>;
+    var managers = ViewBag.Managers as List<EmployeeSummaryDTO>;
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Assign Mission</h1>
+    <p class="text-muted mb-4">Create a new mission assignment for an employee.</p>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                    }
+
+                    <form asp-action="AssignMission" method="post">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Employee</label>
+                            <select name="employeeID" class="form-select" required>
+                                <option value="">-- Select Employee --</option>
+                                @if (employees != null)
+                                {
+                                    foreach (var emp in employees)
+                                    {
+                                        <option value="@emp.EmployeeID">@emp.FullName (@emp.DepartmentName)</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Manager (Supervisor)</label>
+                            <select name="managerID" class="form-select" required>
+                                <option value="">-- Select Manager --</option>
+                                @if (managers != null)
+                                {
+                                    foreach (var emp in managers)
+                                    {
+                                        <option value="@emp.EmployeeID">@emp.FullName (@emp.PositionTitle)</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Destination</label>
+                            <input type="text" name="destination" class="form-control" required placeholder="e.g. New York Office" />
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label small text-muted">Start Date</label>
+                                <input type="date" name="startDate" class="form-control" required value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-muted">End Date</label>
+                                <input type="date" name="endDate" class="form-control" required value="@DateTime.Today.AddDays(7).ToString("yyyy-MM-dd")" />
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <a asp-controller="Home" asp-action="Mission" class="btn btn-outline-dark">Cancel</a>
+                            <button type="submit" class="btn btn-dark">Assign Mission</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

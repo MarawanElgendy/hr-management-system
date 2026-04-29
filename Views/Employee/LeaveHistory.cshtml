@@ -1,0 +1,101 @@
+@model dynamic
+@{
+    ViewData["Title"] = "Leave History";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-light mb-1">Leave</h1>
+            <p class="text-muted mb-0">View your balances and request history.</p>
+        </div>
+        <a asp-action="RequestLeave" class="btn btn-dark">New Request</a>
+    </div>
+
+    @* Balances Section *@
+    <div class="row mb-5 g-4">
+        @if (Model.Balances != null)
+        {
+            foreach (var balance in Model.Balances)
+            {
+                <div class="col-md-6 col-lg-3">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body text-center py-4">
+                            <p class="text-muted small mb-2">@balance.TypeName</p>
+                            <h2 class="display-5 fw-bold mb-1">@balance.Remaining</h2>
+                            <p class="text-muted small mb-0">Days Remaining</p>
+                            <small class="text-muted">(Entitled: @balance.Entitlement | Used: @balance.Used)</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    @* History Section *@
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white border-bottom">
+            <h5 class="mb-0 fw-bold">Request History</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Start Date</th>
+                        <th>Type</th>
+                        <th>Duration</th>
+                        <th>Dates</th>
+                        <th>Status</th>
+                        <th>Attachment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.History != null)
+                    {
+                        foreach (var request in Model.History)
+                        {
+                            <tr>
+                                <td>@request.StartDate.ToString("d")</td>
+                                <td>@request.LeaveType?.TypeName</td>
+                                <td>@request.Duration Days</td>
+                                <td>
+                                    @{
+                                        var endDate = request.StartDate.AddDays(request.Duration - 1);
+                                    }
+                                    @request.StartDate.ToString("d") - @endDate.ToString("d")
+                                </td>
+                                <td>
+                                    @if(request.Status == "Approved")
+                                    {
+                                        <span class="badge bg-dark">Approved</span>
+                                    }
+                                    else if(request.Status == "Rejected")
+                                    {
+                                        <span class="badge bg-secondary">Rejected</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-light text-dark border">Pending</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (request.LeaveDocuments != null && request.LeaveDocuments.Count > 0)
+                                    {
+                                        foreach(var doc in request.LeaveDocuments)
+                                        {
+                                            <a href="@doc.FilePath" target="_blank" class="btn btn-sm btn-outline-dark">View</a>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">-</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+@model List<DTOs.EmployeeSummaryDTO>
+
+@{
+    ViewData["Title"] = "My Team";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">My Team</h1>
+    <p class="text-muted mb-4">View your direct reports and their contact information.</p>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center py-5">
+                <p class="text-muted mb-0">You do not have any team members assigned to you at the moment.</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Position</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var member in Model)
+                            {
+                                <tr>
+                                    <td class="fw-bold">@member.FullName</td>
+                                    <td>@member.DepartmentName</td>
+                                    <td class="text-muted">@member.PositionTitle</td>
+                                    <td>
+                                        <a href="mailto:@member.EmailAddress" class="text-dark">@member.EmailAddress</a>
+                                    </td>
+                                    <td>@member.PhoneNumber</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>

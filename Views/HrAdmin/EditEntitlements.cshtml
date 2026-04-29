@@ -1,0 +1,59 @@
+@model List<Services.Mission.LeaveEntitlementDto>
+@{
+    ViewData["Title"] = "Edit Entitlements";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-light mb-1">Edit Entitlements</h1>
+            <p class="text-muted mb-0">Adjust leave entitlements for @ViewBag.EmployeeName</p>
+        </div>
+        <a asp-action="ManageEntitlements" class="btn btn-outline-dark">Back</a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <form asp-action="SaveEntitlements" method="post">
+                        <input type="hidden" name="employeeId" value="@ViewBag.EmployeeId" />
+                        
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Leave Type</th>
+                                        <th>Annual Entitlement (Days)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for(int i=0; i < Model.Count; i++)
+                                    {
+                                        <tr>
+                                            <td class="align-middle fw-bold">
+                                                @Model[i].LeaveTypeName
+                                            </td>
+                                            <td>
+                                                <input type="number" name="entitlements[@Model[i].LeaveTypeId]" value="@Model[i].CurrentEntitlement" class="form-control" min="0" />
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

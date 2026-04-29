@@ -1,0 +1,78 @@
+@{
+    ViewData["Title"] = "Shift";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-5 fw-light">Shift</h1>
+
+    @if (!User.IsInRole("SystemAdministrator") && !User.IsInRole("HRAdministrator") && !User.IsInRole("LineManager"))
+    {
+        <div class="alert alert-info border-black">
+            No shift management features available.
+        </div>
+    }
+    else
+    {
+        @* Management Section *@
+        <h4 class="mb-3 fw-normal">Management</h4>
+        <div class="row g-4">
+            
+            @if (User.IsInRole("SystemAdministrator"))
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Shift Configuration</h5>
+                            <p class="card-text text-muted small">Define standard shift timings and allowances.</p>
+                            <a asp-controller="SystemAdmin" asp-action="ShiftTypes" class="btn btn-dark w-100 stretched-link">Configure</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Shift Assignment</h5>
+                            <p class="card-text text-muted small">Assign shifts to multiple employees or departments at once.</p>
+                            <a asp-controller="SystemAdmin" asp-action="AssignShift" class="btn btn-dark w-100 stretched-link">Assign</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Individual Adjustments</h5>
+                            <p class="card-text text-muted small">Modify specific shift assignments for an employee.</p>
+                            <a asp-controller="SystemAdmin" asp-action="ManageEmployeeShifts" class="btn btn-dark w-100 stretched-link">Manage</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (User.IsInRole("HRAdministrator"))
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Special Shifts</h5>
+                            <p class="card-text text-muted small">Configure split and rotational shifts.</p>
+                            <a asp-controller="HRAdmin" asp-action="ShiftScheduler" class="btn btn-dark w-100 stretched-link">Open</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (User.IsInRole("LineManager"))
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Team Scheduling</h5>
+                            <p class="card-text text-muted small">Assign and manage shifts for your direct reports.</p>
+                            <a asp-controller="Manager" asp-action="AssignTeamShift" class="btn btn-dark w-100 stretched-link">Assign</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

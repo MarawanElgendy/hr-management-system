@@ -1,0 +1,74 @@
+@using DTOs
+@model List<ExpiringContractDTO>
+@{
+    ViewData["Title"] = "Expiring Contracts";
+    int days = ViewBag.Days ?? 30;
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Expiring Contracts</h1>
+    <p class="text-muted mb-4">Contracts expiring within the next <strong>@days</strong> days.</p>
+    
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body py-2">
+            <form method="get" class="d-flex align-items-center gap-2">
+                <label class="small text-muted mb-0">Days filter:</label>
+                <input type="number" name="days" value="@days" class="form-control form-control-sm" style="width: 80px;" />
+                <button class="btn btn-sm btn-dark" type="submit">Filter</button>
+            </form>
+        </div>
+    </div>
+    
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-0">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Type</th>
+                            <th>Current End Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var contract in Model)
+                        {
+                            <tr>
+                                <td class="fw-bold">@contract.EmployeeName</td>
+                                <td>@contract.ContractType</td>
+                                <td><strong>@contract.EndDate.ToShortDateString()</strong></td>
+                                <td>
+                                    <form asp-action="RenewContract" method="post" class="d-flex gap-2">
+                                        <input type="hidden" name="contractID" value="@contract.ContractID" />
+                                        <input type="date" name="newEndDate" class="form-control form-control-sm" required 
+                                               value="@contract.EndDate.AddYears(1).ToString("yyyy-MM-dd")" style="width: 140px;" />
+                                        <button type="submit" class="btn btn-sm btn-dark">Renew</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center py-5">
+                <p class="text-muted mb-0">No contracts found expiring in this period.</p>
+            </div>
+        </div>
+    }
+</div>

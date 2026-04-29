@@ -1,0 +1,162 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    var notifications = ViewBag.Notifications as List<HRMS.Models.Notification>;
+}
+
+<div class="container mt-4 d-flex flex-column" style="min-height: calc(100vh - 180px);">
+    @* Welcome Header - Above Both Columns *@
+    <div class="mb-4">
+        <h1 class="fw-light">Welcome</h1>
+        <p class="text-muted">Navigate to the areas you need below.</p>
+    </div>
+
+    @* Main Row - Cards and Notifications at same level *@
+    <div class="row flex-grow-1 mb-4">
+        @* Left Column - Dashboard Grid *@
+        <div class="col-lg-8">
+            <div class="row g-4">
+                @* Employees *@
+                <div class="col-md-6 col-lg-4">
+                    <a asp-controller="Home" asp-action="Employees" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm border-0">
+                            <div class="card-body text-center py-4">
+                                <h5 class="card-title fw-bold">Employees</h5>
+                                <p class="card-text text-muted small">Directory and onboarding.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                @* Hierarchy *@
+                <div class="col-md-6 col-lg-4">
+                    <a asp-controller="Home" asp-action="Hierarchy" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm border-0">
+                            <div class="card-body text-center py-4">
+                                <h5 class="card-title fw-bold">Hierarchy</h5>
+                                <p class="card-text text-muted small">Organizational structure.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                @* Shift *@
+                @if (User.IsInRole("SystemAdministrator") || User.IsInRole("HRAdministrator") || User.IsInRole("LineManager"))
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <a asp-controller="Home" asp-action="Shift" class="text-decoration-none text-dark">
+                            <div class="card h-100 shadow-sm border-0">
+                                <div class="card-body text-center py-4">
+                                    <h5 class="card-title fw-bold">Shift</h5>
+                                    <p class="card-text text-muted small">Scheduling and types.</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+
+                @* Mission *@
+                <div class="col-md-6 col-lg-4">
+                    <a asp-controller="Home" asp-action="Mission" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm border-0">
+                            <div class="card-body text-center py-4">
+                                <h5 class="card-title fw-bold">Mission</h5>
+                                <p class="card-text text-muted small">Assignments and travel.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                @* Attendance *@
+                <div class="col-md-6 col-lg-4">
+                    <a asp-controller="Home" asp-action="Attendance" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm border-0">
+                            <div class="card-body text-center py-4">
+                                <h5 class="card-title fw-bold">Attendance</h5>
+                                <p class="card-text text-muted small">Log and corrections.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                @* Leave *@
+                <div class="col-md-6 col-lg-4">
+                    <a asp-controller="Home" asp-action="Leave" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm border-0">
+                            <div class="card-body text-center py-4">
+                                <h5 class="card-title fw-bold">Leave</h5>
+                                <p class="card-text text-muted small">Requests and history.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                @* Contract - HR Only *@
+                @if (User.IsInRole("HRAdministrator"))
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <a asp-controller="Home" asp-action="Contract" class="text-decoration-none text-dark">
+                            <div class="card h-100 shadow-sm border-0">
+                                <div class="card-body text-center py-4">
+                                    <h5 class="card-title fw-bold">Contracts</h5>
+                                    <p class="card-text text-muted small">Employee agreements.</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        @* Right Column - Notifications (fills height) *@
+        <div class="col-lg-4 d-flex">
+            <div class="card shadow-sm border-0 flex-grow-1 d-flex flex-column">
+                <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 fw-bold">Notifications</h6>
+                    <span class="badge bg-dark rounded-pill">@(notifications?.Count ?? 0)</span>
+                </div>
+                <div class="card-body p-0 flex-grow-1" style="overflow-y: auto;">
+                    @if (notifications != null && notifications.Any())
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var note in notifications)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-start py-3" id="note-@note.NotificationId">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold small">
+                                            @note.Type
+                                            <small class="text-muted ms-2" style="font-size: 0.7em;">@(note.Timestamp?.ToString("g") ?? "")</small>
+                                        </div>
+                                        <span class="small text-muted">@note.MessageContent</span>
+                                    </div>
+                                    <button class="btn btn-sm btn-link text-dark p-0" onclick="markAsRead(@note.NotificationId)" title="Mark as read">
+                                        &times;
+                                    </button>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="p-4 text-center text-muted">
+                            No new notifications.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function markAsRead(id) {
+        try {
+            await fetch('/Home/MarkNotificationRead?id=' + id, { method: 'POST' });
+            var el = document.getElementById('note-' + id);
+            el.style.transition = 'opacity 0.3s';
+            el.style.opacity = '0';
+            setTimeout(() => el.remove(), 300);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+</script>

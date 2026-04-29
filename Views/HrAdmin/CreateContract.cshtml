@@ -1,0 +1,75 @@
+@model DTOs.CreateContractDTO
+
+@{
+    ViewData["Title"] = "Create Contract";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Create Contract</h1>
+    <p class="text-muted mb-4">Set up a new employment contract for an employee.</p>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                    }
+
+                    <form asp-action="CreateContract" method="post">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Employee</label>
+                            @{
+                                var employees = ViewBag.Employees as List<DTOs.EmployeeSummaryDTO>;
+                                if (employees != null)
+                                {
+                                    <select asp-for="EmployeeID" class="form-select" required>
+                                        <option value="">Select Employee...</option>
+                                        @foreach (var emp in employees)
+                                        {
+                                            <option value="@emp.EmployeeID">@emp.FullName (@emp.EmployeeID)</option>
+                                        }
+                                    </select>
+                                }
+                                else
+                                {
+                                    <input class="form-control" value="@Model.EmployeeID" readonly />
+                                    <input type="hidden" asp-for="EmployeeID" />
+                                }
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Contract Type</label>
+                            <select asp-for="Type" class="form-select" required>
+                                <option value="">Select Type...</option>
+                                <option value="FullTime">Full Time</option>
+                                <option value="PartTime">Part Time</option>
+                                <option value="Consultant">Consultant</option>
+                                <option value="Internship">Internship</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Start Date</label>
+                            <input type="date" asp-for="StartDate" class="form-control" required />
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label small text-muted">End Date</label>
+                            <input type="date" asp-for="EndDate" class="form-control" required />
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-dark">Create Contract</button>
+                            <a asp-controller="Home" asp-action="Contract" class="btn btn-outline-dark">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

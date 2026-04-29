@@ -1,0 +1,88 @@
+@{
+    ViewData["Title"] = "Attendance";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-5 fw-light">Attendance</h1>
+
+    @* Personal Section *@
+    <h4 class="mb-3 fw-normal">Personal</h4>
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Attendance Log</h5>
+                    <p class="card-text text-muted small">View your daily check-in and check-out history.</p>
+                    <a asp-controller="Employee" asp-action="Attendance" class="btn btn-outline-dark w-100 stretched-link">View</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+             <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Correction Requests</h5>
+                    <p class="card-text text-muted small">Submit requests to fix incorrect attendance records.</p>
+                    <a asp-controller="Employee" asp-action="RequestCorrection" class="btn btn-outline-dark w-100 stretched-link">Request</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+             <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">View Policies</h5>
+                    <p class="card-text text-muted small">Read the company attendance rules and regulations.</p>
+                    <a asp-controller="Employee" asp-action="ViewRules" class="btn btn-outline-dark w-100 stretched-link">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Management Section *@
+    @if (User.IsInRole("SystemAdministrator") || User.IsInRole("HRAdministrator") || User.IsInRole("LineManager"))
+    {
+        <hr class="my-5" />
+        <h4 class="mb-3 fw-normal">Management</h4>
+        <div class="row g-4">
+            @if (User.IsInRole("SystemAdministrator"))
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Synchronize with Leaves</h5>
+                            <p class="card-text text-muted small">Update attendance records based on approved leaves.</p>
+                            <form asp-controller="SystemAdmin" asp-action="SyncLeaveAttendance" method="post">
+                                <button type="submit" class="btn btn-dark w-100 stretched-link">Sync</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+            @if (User.IsInRole("HRAdministrator"))
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Configure Rules</h5>
+                            <p class="card-text text-muted small">Set up attendance policies and thresholds.</p>
+                            <a asp-controller="HRAdmin" asp-action="AttendanceRules" class="btn btn-dark w-100 stretched-link">Configure</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (User.IsInRole("LineManager"))
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Team Attendance</h5>
+                            <p class="card-text text-muted small">Monitor daily attendance for your direct reports.</p>
+                            <a asp-controller="Manager" asp-action="TeamAttendance" class="btn btn-dark w-100 stretched-link">View</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

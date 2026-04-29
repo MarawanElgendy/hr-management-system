@@ -1,0 +1,97 @@
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-5 fw-light">Employees</h1>
+
+    @* Personal Section *@
+    <h4 class="mb-3 fw-normal">Personal</h4>
+    <div class="row g-4">
+        @* Directory *@
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Employee Directory</h5>
+                    <p class="card-text text-muted small">Search for colleagues and view their contact information.</p>
+                    <a asp-controller="Home" asp-action="EmployeeDirectory" class="btn btn-outline-dark w-100 stretched-link">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Management Section *@
+    @if (User.IsInRole("SystemAdministrator") || User.IsInRole("HRAdministrator") || User.IsInRole("LineManager"))
+    {
+        <hr class="my-5" />
+        <h4 class="mb-3 fw-normal">Management</h4>
+        <div class="row g-4">
+            
+            @if (User.IsInRole("SystemAdministrator"))
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Add New Employee</h5>
+                            <p class="card-text text-muted small">Register a new employee into the system.</p>
+                            <a asp-controller="SystemAdmin" asp-action="CreateEmployee" class="btn btn-dark w-100 stretched-link">Create</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Assign Role</h5>
+                            <p class="card-text text-muted small">Grant system access privileges to employees.</p>
+                            <a asp-controller="SystemAdmin" asp-action="AssignRole" class="btn btn-dark w-100 stretched-link">Assign</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (User.IsInRole("HRAdministrator"))
+            {
+                 <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Update Employee Records</h5>
+                            <p class="card-text text-muted small">Modify existing employee roles and details.</p>
+                            <a asp-controller="HRAdmin" asp-action="Index" class="btn btn-dark w-100 stretched-link">Manage</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Department Statistics</h5>
+                            <p class="card-text text-muted small">View headcount and distribution metrics by department.</p>
+                            <a asp-controller="HRAdmin" asp-action="DepartmentStats" class="btn btn-dark w-100 stretched-link">View</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Reports</h5>
+                            <p class="card-text text-muted small">Analyze workforce diversity demographics and compliance information.</p>
+                            <a asp-controller="HRAdmin" asp-action="DiversityReport" class="btn btn-dark w-100 stretched-link">View</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (User.IsInRole("LineManager"))
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Teams Reports</h5>
+                            <p class="card-text text-muted small">View detailed profiles of your team members.</p>
+                            <a asp-controller="Manager" asp-action="MyTeam" class="btn btn-dark w-100 stretched-link">View</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

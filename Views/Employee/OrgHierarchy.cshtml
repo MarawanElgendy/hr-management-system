@@ -1,0 +1,67 @@
+@model List<DTOs.OrgHierarchyDTO>
+@{
+    ViewData["Title"] = "Hierarchy";
+    var hierarchy = Model
+        .OrderBy(x => x.HierarchyLevel)
+        .GroupBy(x => new { x.ManagerID, x.ManagerName })
+        .ToList();
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Hierarchy</h1>
+    <p class="text-muted mb-4">Visualize the organizational structure and reporting lines.</p>
+
+    @foreach (var managerGroup in hierarchy)
+    {
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-white border-bottom py-3">
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                        <span class="fw-bold">M</span>
+                    </div>
+                    <div>
+                        <h5 class="m-0 fw-bold">
+                            @(managerGroup.Key.ManagerName ?? "Unassigned")
+                        </h5>
+                        <small class="text-muted">Manager</small>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                @{
+                    var deptGroups = managerGroup.GroupBy(x => x.DepartmentName).OrderBy(x => x.Key);
+                }
+                
+                @foreach(var dept in deptGroups)
+                {
+                    <div class="mb-4 ps-3 border-start border-3">
+                        <h6 class="fw-bold text-muted text-uppercase mb-3">@dept.Key</h6>
+                        
+                        <div class="row g-3">
+                            @foreach(var emp in dept)
+                            {
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card h-100 border shadow-sm">
+                                        <div class="card-body py-2">
+                                            <p class="text-muted small mb-1">@emp.PositionTitle</p>
+                                            <p class="fw-bold mb-0">@emp.EmployeeName</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    
+    @if (!Model.Any())
+    {
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center py-5">
+                <p class="text-muted mb-0">No organizational data found.</p>
+            </div>
+        </div>
+    }
+</div>

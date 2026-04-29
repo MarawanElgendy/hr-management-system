@@ -1,0 +1,50 @@
+@model List<HRMS.Models.AttendanceRule>
+@{
+    ViewData["Title"] = "Attendance Rules";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Attendance Policies</h1>
+    <p class="text-muted mb-4">These rules are automatically applied to your daily attendance and check in/out times.</p>
+
+    <div class="row g-4">
+        @foreach (var rule in Model)
+        {
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-1">@rule.RuleName</h5>
+                        <small class="text-muted">Last updated: @rule.LastUpdatedAt?.ToShortDateString()</small>
+                        
+                        <div class="p-3 bg-light rounded mt-3">
+                            @if (rule.NumericValue.HasValue)
+                            {
+                                <div class="mb-2">
+                                    <span class="text-muted small text-uppercase">Threshold/Limit</span>
+                                    <div class="fs-4 fw-bold">@rule.NumericValue <span class="fs-6 text-muted">minutes</span></div>
+                                </div>
+                            }
+                            
+                            @if (!string.IsNullOrEmpty(rule.Value))
+                            {
+                                <div>
+                                    <span class="text-muted small text-uppercase">Configuration</span>
+                                    <div class="fs-5">@rule.Value</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center py-5">
+                <p class="text-muted mb-0">No attendance rules configured.</p>
+            </div>
+        </div>
+    }
+</div>

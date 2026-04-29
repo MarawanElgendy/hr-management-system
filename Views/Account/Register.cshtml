@@ -1,0 +1,103 @@
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Register</h1>
+    <p class="text-muted mb-4">Create a new employee account.</p>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <form asp-action="Register" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted">First Name</label>
+                        <input name="firstName" class="form-control" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted">Last Name</label>
+                        <input name="lastName" class="form-control" required />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted">Email</label>
+                        <input type="email" name="email" class="form-control" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted">Phone</label>
+                        <input type="tel" name="phone" class="form-control" required />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small text-muted">National ID</label>
+                    <input name="nationalID" class="form-control" required />
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted">Birth Date</label>
+                        <input type="date" name="birthDate" class="form-control" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted">Birth Country</label>
+                        <input name="birthCountry" class="form-control" required />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted">Hire Date</label>
+                        <input type="date" name="hireDate" class="form-control" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted">Account Type</label>
+                        <select name="type" class="form-select" required>
+                            <option value="">Select Account Type...</option>
+                            <option value="SystemAdministrator">System Administrator</option>
+                            <option value="HRAdministrator">HR Administrator</option>
+                            <option value="PayrollSpecialist">Payroll Specialist</option>
+                            <option value="LineManager">Line Manager</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted">Department</label>
+                        <select name="departmentID" class="form-select" required>
+                            <option value="">Select Department...</option>
+                            @if (ViewBag.Departments != null)
+                            {
+                                foreach (var dept in ViewBag.Departments)
+                                {
+                                    <option value="@dept.DepartmentId">@dept.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted">Role</label>
+                        <select name="roleID" class="form-select" required>
+                            <option value="">Select Role...</option>
+                            @if (ViewBag.Roles != null)
+                            {
+                                foreach (var role in ViewBag.Roles)
+                                {
+                                    <option value="@role.RoleId">@role.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-dark">Register</button>
+                <a asp-action="Login" class="btn btn-outline-dark">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

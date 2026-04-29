@@ -1,0 +1,49 @@
+@model DTOs.MissionsDTO
+@{
+    ViewData["Title"] = "My Missions";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Missions</h1>
+    <p class="text-muted mb-4">View your current and past mission assignments.</p>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    @if (Model != null && Model.Missions != null && Model.Missions.Any())
+    {
+        <div class="row g-4">
+            @foreach (var mission in Model.Missions)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0 fw-bold">@mission.Destination</h5>
+                            <span class="badge bg-dark">@mission.Status</span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text small">
+                                <strong>Start:</strong> @mission.StartDate.ToShortDateString()<br/>
+                                <strong>End:</strong> @mission.EndDate.ToShortDateString()<br/>
+                                <strong>Manager:</strong> @mission.ManagerName
+                            </p>
+                        </div>
+                        <div class="card-footer bg-white border-top-0">
+                            <small class="text-muted">ID: @mission.MissionID</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center py-5">
+                <p class="text-muted mb-0">You currently do not have any assigned missions.</p>
+            </div>
+        </div>
+    }
+</div>

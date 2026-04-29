@@ -1,0 +1,133 @@
+@model List<HRMS.Models.AttendanceRule>
+@{
+    ViewData["Title"] = "Attendance Rules";
+    var gracePeriod = Model.FirstOrDefault(r => r.RuleName == "GracePeriod")?.NumericValue ?? 15;
+    var penaltyThreshold = Model.FirstOrDefault(r => r.RuleName == "PenaltyThreshold");
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Attendance Configuration</h1>
+    <p class="text-muted mb-4">Define policies for grace periods, penalties, and short-time rules.</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="row g-4">
+        @* Grace Period Card *@
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0 fw-bold">Grace Period</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">Set allowed delay (in minutes) before marking 'Late'.</p>
+                    <form asp-action="SetGracePeriod" method="post">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Minutes</label>
+                            <input type="number" name="minutes" class="form-control" value="@gracePeriod" min="0" required />
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        @* Penalty Threshold Card *@
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0 fw-bold">Penalty Threshold</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">Define when late arrival triggers a penalty.</p>
+                    <form asp-action="DefinePenaltyThreshold" method="post">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Late Threshold (Minutes)</label>
+                            <input type="number" name="lateMinutes" class="form-control" value="@(penaltyThreshold?.NumericValue ?? 30)" min="0" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Deduction Type</label>
+                            <select name="deductionType" class="form-select">
+                                <option value="SalaryDeduction" selected="@(penaltyThreshold?.Value == "SalaryDeduction")">Salary Deduction</option>
+                                <option value="Warning" selected="@(penaltyThreshold?.Value == "Warning")">Warning Only</option>
+                                <option value="LeaveDeduction" selected="@(penaltyThreshold?.Value == "LeaveDeduction")">Leave Deduction</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100">Set Rule</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        @* Short Time Rules Card *@
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0 fw-bold">Short-Time Rules</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">Partial attendance rules (e.g. Half-Day logic).</p>
+                    <form asp-action="DefineShortTimeRules" method="post">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Rule Name</label>
+                            <input type="text" name="ruleName" class="form-control" placeholder="e.g. Standard" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Late Minutes Limit</label>
+                            <input type="number" name="lateMinutes" class="form-control" placeholder="60" min="0" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Early Leave Limit</label>
+                            <input type="number" name="earlyLeaveMinutes" class="form-control" placeholder="60" min="0" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Penalty Type</label>
+                            <select name="penaltyType" class="form-select">
+                                <option value="HalfDay">Mark Half-Day</option>
+                                <option value="Absent">Mark Absent</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100">Define Rule</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card shadow-sm border-0 mt-4">
+        <div class="card-header bg-white border-bottom">
+            <h6 class="mb-0 fw-bold">Current Configuration</h6>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Rule Name</th>
+                            <th>Value</th>
+                            <th>Numeric Value</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var rule in Model)
+                        {
+                            <tr>
+                                <td class="fw-bold">@rule.RuleName</td>
+                                <td>@rule.Value</td>
+                                <td>@rule.NumericValue</td>
+                                <td class="text-muted small">@rule.LastUpdatedAt</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

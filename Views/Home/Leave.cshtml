@@ -1,0 +1,92 @@
+@{
+    ViewData["Title"] = "Leave";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-5 fw-light">Leave</h1>
+
+    @* Personal Section *@
+    <h4 class="mb-3 fw-normal">Personal</h4>
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">New Request</h5>
+                    <p class="card-text text-muted small">Apply for annual, sick, or other types of leave.</p>
+                    <a asp-controller="Employee" asp-action="RequestLeave" class="btn btn-outline-dark w-100 stretched-link">Request</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Leave History</h5>
+                    <p class="card-text text-muted small">Track the status of your past leave applications.</p>
+                    <a asp-controller="Employee" asp-action="LeaveHistory" class="btn btn-outline-dark w-100 stretched-link">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Management Section *@
+    @if (User.IsInRole("HRAdministrator") || User.IsInRole("LineManager"))
+    {
+        <hr class="my-5" />
+        <h4 class="mb-3 fw-normal">Management</h4>
+        <div class="row g-4">
+            
+            @if (User.IsInRole("LineManager"))
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Review Requests</h5>
+                            <p class="card-text text-muted small">Approve or reject leave applications from your team.</p>
+                            <a asp-controller="Manager" asp-action="LeaveRequests" class="btn btn-dark w-100 stretched-link">Review</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (User.IsInRole("HRAdministrator"))
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Leave Types</h5>
+                            <p class="card-text text-muted small">Define available leave categories and their rules.</p>
+                            <a asp-controller="HRAdmin" asp-action="ManageLeaveTypes" class="btn btn-dark w-100 stretched-link">Manage</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Leave Policies</h5>
+                            <p class="card-text text-muted small">Configure accrual and reset policies.</p>
+                            <a asp-controller="HRAdmin" asp-action="ManageLeavePolicies" class="btn btn-dark w-100 stretched-link">Manage</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Leave Entitlement</h5>
+                            <p class="card-text text-muted small">Adjust leave balances for individual employees.</p>
+                            <a asp-controller="HRAdmin" asp-action="ManageEntitlements" class="btn btn-dark w-100 stretched-link">Manage</a>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">HR Admin Override</h5>
+                            <p class="card-text text-muted small">Forcefully update the status of any leave request.</p>
+                            <a asp-controller="HRAdmin" asp-action="ManageLeaveRequests" class="btn btn-dark w-100 stretched-link">Manage</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

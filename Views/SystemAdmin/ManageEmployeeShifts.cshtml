@@ -1,0 +1,255 @@
+@{
+    ViewData["Title"] = "Manage Employee Shifts";
+}
+
+<div class="container-fluid mt-4">
+    <h1 class="mb-4 fw-light">Individual Adjustments</h1>
+    <p class="text-muted mb-4">Modify specific shift assignments for an employee.</p>
+
+    <div class="row">
+        @* Sidebar: Employee Selection *@
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-white border-bottom">
+                    <h6 class="mb-0 fw-bold">Select Employee</h6>
+                </div>
+                <div class="card-body">
+                    <form id="employeeForm">
+                        <select id="employeeSelect" class="form-select mb-3" onchange="loadSchedule()">
+                            <option value="">-- Select Employee --</option>
+                            @if (ViewBag.Employees != null)
+                            {
+                                @foreach (var emp in ViewBag.Employees)
+                                {
+                                    <option value="@emp.EmployeeID" selected="@(ViewBag.SelectedEmployeeId == emp.EmployeeID ? "selected" : null)">
+                                        @emp.FullName (@emp.PositionTitle)
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </form>
+                    <div id="employeeInfo" class="text-muted small"></div>
+                </div>
+            </div>
+
+            @* Actions Panel *@
+            <div id="actionsPanel" class="card shadow-sm border-0 d-none">
+                <div class="card-header bg-white border-bottom">
+                    <h6 class="mb-0 fw-bold">Actions</h6>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-outline-dark w-100 mb-2" onclick="showAssignModal()">Assign Standard Shift</button>
+                    <button class="btn btn-dark w-100" onclick="showCustomModal()">Create Custom Shift</button>
+                </div>
+            </div>
+        </div>
+
+        @* Main Content: Calendar *@
+        <div class="col-md-9">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 fw-bold">Schedule</h5>
+                    <div>
+                        <button class="btn btn-sm btn-outline-dark" onclick="changeWeek(-1)">Previous</button>
+                        <span id="currentDateRange" class="fw-bold mx-2"></span>
+                        <button class="btn btn-sm btn-outline-dark" onclick="changeWeek(1)">Next</button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center mb-0" id="scheduleTable">
+                            <thead>
+                                <tr id="scheduleHeader"></tr>
+                            </thead>
+                            <tbody>
+                                <tr id="scheduleBody"></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal: Assign Standard *@
+<div class="modal fade" id="assignModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Assign Standard Shift</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="assignForm">
+                    <input type="hidden" name="employeeId" id="assignEmployeeId" />
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">Date</label>
+                        <input type="date" name="date" id="assignDate" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">Shift Name</label>
+                        <select name="shiftType" class="form-select" required>
+                            <option value="">Select Shift</option>
+                            @if (ViewBag.ShiftNames != null)
+                            {
+                                @foreach (var name in ViewBag.ShiftNames)
+                                {
+                                    <option value="@name">@name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" onclick="submitAssignStandard()">Assign</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal: Add Custom *@
+<div class="modal fade" id="customModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Create Custom Shift</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="customForm">
+                    <input type="hidden" name="employeeId" id="customEmployeeId" />
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">Date</label>
+                        <input type="date" name="date" id="customDate" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="e.g. Special Project" required />
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label small text-muted">Start Time</label>
+                            <input type="time" name="start" class="form-control" required />
+                        </div>
+                        <div class="col">
+                            <label class="form-label small text-muted">End Time</label>
+                            <input type="time" name="end" class="form-control" required />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" onclick="submitCustomShift()">Create & Assign</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let currentStartDate = new Date();
+        currentStartDate.setDate(currentStartDate.getDate() - currentStartDate.getDay());
+
+        function formatDate(date) {
+            return date.toISOString().split('T')[0];
+        }
+
+        function changeWeek(offset) {
+            currentStartDate.setDate(currentStartDate.getDate() + (offset * 7));
+            loadSchedule();
+        }
+
+        async function loadSchedule() {
+            const empId = document.getElementById("employeeSelect").value;
+            if (!empId) {
+                document.getElementById("actionsPanel").classList.add("d-none");
+                return;
+            }
+            document.getElementById("actionsPanel").classList.remove("d-none");
+
+            const start = new Date(currentStartDate);
+            const end = new Date(currentStartDate);
+            end.setDate(end.getDate() + 6);
+
+            document.getElementById("currentDateRange").innerText = `${formatDate(start)} to ${formatDate(end)}`;
+
+            const headerRow = document.getElementById("scheduleHeader");
+            headerRow.innerHTML = "";
+            const dates = [];
+            for (let i = 0; i < 7; i++) {
+                let d = new Date(start);
+                d.setDate(d.getDate() + i);
+                dates.push(d);
+                headerRow.innerHTML += `<th>${d.toLocaleDateString('en-US', { weekday: 'short', month: 'numeric', day: 'numeric' })}</th>`;
+            }
+
+            const sStr = formatDate(start);
+            const eStr = formatDate(end);
+            const response = await fetch(`/SystemAdmin/GetEmployeeShifts?employeeId=${empId}&start=${sStr}&end=${eStr}`);
+            const shifts = await response.json();
+
+            const bodyRow = document.getElementById("scheduleBody");
+            bodyRow.innerHTML = "";
+            
+            for (let i = 0; i < 7; i++) {
+                const dateKey = formatDate(dates[i]);
+                const shift = shifts.find(s => s.startDate.split('T')[0] === dateKey || s.StartDate?.split('T')[0] === dateKey);
+
+                let cellContent = `<span class="text-muted">-</span>`;
+                if (shift) {
+                    const name = shift.name || shift.Name;
+                    const startT = shift.startTime || shift.StartTime;
+                    const endT = shift.endTime || shift.EndTime;
+                    const type = shift.type || shift.Type;
+                    const id = shift.assignmentId || shift.AssignmentId;
+
+                    cellContent = `
+                        <div class="p-2 border rounded bg-white shadow-sm">
+                            <strong>${name}</strong><br/>
+                            <small>${startT} - ${endT}</small><br/>
+                            <span class="badge bg-dark">${type}</span><br/>
+                            <button class="btn btn-sm btn-outline-dark mt-1" onclick="deleteAssignment(${id})">Remove</button>
+                        </div>
+                    `;
+                }
+                bodyRow.innerHTML += `<td class="align-top" style="height: 150px; background-color: #f8f9fa;">${cellContent}</td>`;
+            }
+        }
+
+        function showAssignModal() {
+            document.getElementById("assignEmployeeId").value = document.getElementById("employeeSelect").value;
+            new bootstrap.Modal(document.getElementById("assignModal")).show();
+        }
+
+        function showCustomModal() {
+            document.getElementById("customEmployeeId").value = document.getElementById("employeeSelect").value;
+            new bootstrap.Modal(document.getElementById("customModal")).show();
+        }
+
+        async function submitAssignStandard() {
+            const formData = new FormData(document.getElementById("assignForm"));
+            await fetch('/SystemAdmin/AssignExistingShift', { method: 'POST', body: formData });
+            bootstrap.Modal.getInstance(document.getElementById("assignModal")).hide();
+            loadSchedule();
+        }
+
+        async function submitCustomShift() {
+            const formData = new FormData(document.getElementById("customForm"));
+            await fetch('/SystemAdmin/AddCustomShift', { method: 'POST', body: formData });
+            bootstrap.Modal.getInstance(document.getElementById("customModal")).hide();
+            loadSchedule();
+        }
+
+        async function deleteAssignment(id) {
+            if(!confirm("Are you sure you want to remove this shift?")) return;
+            const formData = new FormData();
+            formData.append("assignmentId", id);
+            await fetch('/SystemAdmin/DeleteAssignment', { method: 'POST', body: formData });
+            loadSchedule();
+        }
+
+        if(document.getElementById("employeeSelect").value) loadSchedule();
+    </script>
+}

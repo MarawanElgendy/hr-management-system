@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "Request Correction";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Correction Request</h1>
+    <p class="text-muted mb-4">Submit a request to fix incorrect attendance records.</p>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                    }
+
+                    <form asp-action="RequestCorrection" method="post">
+                        <div class="mb-3">
+                            <label for="date" class="form-label small text-muted">Date of Incident</label>
+                            <input type="date" class="form-control" id="date" name="date" required value="@DateTime.Today.ToString("yyyy-MM-dd")">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="correctionType" class="form-label small text-muted">Correction Type</label>
+                            <select class="form-select" id="correctionType" name="correctionType" required>
+                                <option value="">Select Type...</option>
+                                <option value="Forgotten Check-In">Forgotten Check-In</option>
+                                <option value="Forgotten Check-Out">Forgotten Check-Out</option>
+                                <option value="System Error">System Error</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="reason" class="form-label small text-muted">Reason / Details</label>
+                            <textarea class="form-control" id="reason" name="reason" rows="3" required placeholder="Please describe what happened..."></textarea>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-dark">Submit Request</button>
+                            <a asp-action="Attendance" class="btn btn-outline-dark">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

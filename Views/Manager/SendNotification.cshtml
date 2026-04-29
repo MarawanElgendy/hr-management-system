@@ -1,0 +1,116 @@
+@model IEnumerable<DTOs.EmployeeSummaryDTO>
+@{
+    ViewData["Title"] = "Send Notification";
+    var teamMembers = ViewBag.TeamMembers as List<DTOs.EmployeeSummaryDTO>;
+    var departments = ViewBag.Departments as dynamic;
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Send Notification</h1>
+    <p class="text-muted mb-4">Communicate with your team members.</p>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success">@TempData["Success"]</div>
+                    }
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">@TempData["Error"]</div>
+                    }
+
+                    <form asp-action="SendNotification" method="post">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Target Audience</label>
+                            <div class="d-flex gap-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="scope" id="scopeAll" value="all" checked onchange="toggleScope()">
+                                    <label class="form-check-label" for="scopeAll">All Team Members</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="scope" id="scopeDept" value="department" onchange="toggleScope()">
+                                    <label class="form-check-label" for="scopeDept">Specific Department</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="scope" id="scopeEmp" value="employee" onchange="toggleScope()">
+                                    <label class="form-check-label" for="scopeEmp">Specific Employees</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3" id="deptSelectDiv" style="display:none;">
+                            <label class="form-label small text-muted">Select Department</label>
+                            <select name="departmentId" class="form-select">
+                                <option value="">-- Select Department --</option>
+                                @if(departments != null)
+                                {
+                                    foreach(var dept in departments)
+                                    {
+                                        <option value="@dept.Id">@dept.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3" id="empSelectDiv" style="display:none;">
+                            <label class="form-label small text-muted">Select Employees <small class="text-muted">(Hold Ctrl/Cmd to select multiple)</small></label>
+                             @if(teamMembers != null && teamMembers.Any())
+                            {
+                                <select name="recipientIds" class="form-select" multiple size="6">
+                                    @foreach (var member in teamMembers)
+                                    {
+                                        <option value="@member.EmployeeID">@member.FullName (@member.PositionTitle)</option>
+                                    }
+                                </select>
+                            }
+                            else
+                            {
+                                <div class="alert alert-warning">No team members found.</div>
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Urgency</label>
+                            <select name="urgency" class="form-select">
+                                <option value="Normal">Normal</option>
+                                <option value="High">High</option>
+                                <option value="Critical">Critical</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label small text-muted">Message</label>
+                            <textarea name="message" class="form-control" rows="4" placeholder="Type your message here..." required></textarea>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-dark">Send Notification</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleScope() {
+        const scope = document.querySelector('input[name="scope"]:checked').value;
+        const deptDiv = document.getElementById('deptSelectDiv');
+        const empDiv = document.getElementById('empSelectDiv');
+
+        if (scope === 'all') {
+            deptDiv.style.display = 'none';
+            empDiv.style.display = 'none';
+        } else if (scope === 'department') {
+            deptDiv.style.display = 'block';
+            empDiv.style.display = 'none';
+        } else if (scope === 'employee') {
+            deptDiv.style.display = 'none';
+            empDiv.style.display = 'block';
+        }
+    }
+</script>

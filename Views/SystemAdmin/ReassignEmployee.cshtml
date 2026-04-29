@@ -1,0 +1,112 @@
+@model DTOs.ReassignEmployeeDTO
+@{
+    ViewData["Title"] = "Reassign Employee";
+    var employees = (List<DTOs.EmployeeSummaryDTO>)ViewBag.Employees;
+    var departments = (List<HRMS.Models.Department>)ViewBag.Departments;
+    var managers = (List<DTOs.EmployeeSummaryDTO>)ViewBag.Managers;
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Reassign Reporting</h1>
+    <p class="text-muted mb-4">Change an employee's department or manager.</p>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                    }
+
+                    <form asp-action="ReassignEmployee" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-4">
+                            <label asp-for="EmployeeID" class="form-label small text-muted">Select Employee</label>
+                            <select asp-for="EmployeeID" class="form-select select2-enable">
+                                <option value="">-- Select Employee --</option>
+                                @foreach (var emp in employees)
+                                {
+                                    <option value="@emp.EmployeeID">@emp.FullName (@emp.PositionTitle)</option>
+                                }
+                            </select>
+                            <span asp-validation-for="EmployeeID" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small text-muted d-block">Select Action:</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" asp-for="Type" value="Department" id="typeDept" checked>
+                                <label class="form-check-label" for="typeDept">Reassign Department</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" asp-for="Type" value="Manager" id="typeMgr">
+                                <label class="form-check-label" for="typeMgr">Reassign Manager</label>
+                            </div>
+                            <span asp-validation-for="Type" class="text-danger"></span>
+                        </div>
+
+                        <div id="deptSection">
+                            <div class="mb-3">
+                                <label asp-for="NewDepartmentID" class="form-label small text-muted">New Department</label>
+                                <select asp-for="NewDepartmentID" class="form-select">
+                                    <option value="">-- Select Department --</option>
+                                    @foreach (var dept in departments)
+                                    {
+                                        <option value="@dept.DepartmentId">@dept.Name</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="NewDepartmentID" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div id="mgrSection" style="display:none;">
+                            <div class="mb-3">
+                                <label asp-for="NewManagerID" class="form-label small text-muted">New Manager</label>
+                                <select asp-for="NewManagerID" class="form-select select2-enable">
+                                    <option value="">-- Select New Manager --</option>
+                                    @foreach (var mgr in managers)
+                                    {
+                                        <option value="@mgr.EmployeeID">@mgr.FullName</option>
+                                    }
+                                </select>
+                                <div class="form-text">Leave blank to unassign current manager (Top Level).</div>
+                                <span asp-validation-for="NewManagerID" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-dark">Update Assignment</button>
+                            <a asp-controller="Home" asp-action="Hierarchy" class="btn btn-outline-dark">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2-enable').select2({ theme: 'bootstrap-5' });
+
+            function toggleSections() {
+                if ($('#typeDept').is(':checked')) {
+                    $('#deptSection').show();
+                    $('#mgrSection').hide();
+                } else {
+                    $('#deptSection').hide();
+                    $('#mgrSection').show();
+                }
+            }
+
+            $('input[name="Type"]').change(toggleSections);
+            toggleSections();
+        });
+    </script>
+}

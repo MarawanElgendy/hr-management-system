@@ -1,0 +1,107 @@
+@model DTOs.EmployeeFullProfileDTO
+
+@{
+    ViewData["Title"] = "Edit Employee Profile";
+
+    var fields = new List<(string Label, string Name, object Value, string Type)>
+    {
+        ("First Name", "firstName", Model.FirstName, "text"),
+        ("Middle Name", "middleName", Model.MiddleName, "text"),
+        ("Last Name", "lastName", Model.LastName, "text"),
+        ("National ID", "nationalID", Model.NationalID, "text"),
+        ("Birth Date", "birthDate", Model.BirthDate?.ToString("yyyy-MM-dd"), "date"),
+        ("Birth Country", "birthCountry", Model.BirthCountry, "text"),
+        ("Email", "emailAddress", Model.EmailAddress, "email"),
+        ("Phone", "phoneNumber", Model.PhoneNumber, "tel"),
+        ("Address", "address", Model.Address, "text"),
+        ("Emergency Contact Name", "emergencyContactName", Model.EmergencyContactName, "text"),
+        ("Emergency Contact Phone", "emergencyContactPhone", Model.EmergencyContactPhone, "tel"),
+        ("Relationship", "relationship", Model.Relationship, "text"),
+        ("Biography", "biography", Model.Biography, "textarea"),
+        ("Employment Status", "employmentStatus", Model.EmploymentStatus, "text"),
+        ("Hire Date", "hireDate", Model.HireDate?.ToString("yyyy-MM-dd"), "date"),
+        ("Department ID", "departmentID", Model.DepartmentID, "number"),
+        ("Position ID", "positionID", Model.PositionID, "number"),
+        ("Manager ID", "managerID", Model.ManagerID, "number"),
+        ("Contract ID", "contractID", Model.ContractID, "number"),
+        ("Tax Form ID", "taxFormID", Model.TaxFormID, "number"),
+        ("Salary Type ID", "salaryTypeID", Model.SalaryTypeID, "number"),
+        ("Pay Grade", "payGrade", Model.PayGrade, "text"),
+        ("Profile Completion %", "profileCompletion", Model.ProfileCompletion, "number"),
+        ("Is Active (1/0)", "isActive", Model.IsActive ? "1" : "0", "number")
+    };
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-light mb-1">Edit: @Model.FullName</h1>
+            <p class="text-muted mb-0">Modify employee profile details.</p>
+        </div>
+        <a href="/Employee/Profile/@Model.EmployeeID" class="btn btn-outline-dark">View Profile</a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Current Value</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in fields)
+                    {
+                        <tr>
+                            <td class="fw-bold align-middle">@item.Label</td>
+                            <td class="align-middle text-muted">@(item.Value ?? "N/A")</td>
+                            <td>
+                                <form asp-action="UpdateProfileField" method="post" class="d-flex gap-2">
+                                    <input type="hidden" name="employeeID" value="@Model.EmployeeID" />
+                                    <input type="hidden" name="field" value="@item.Name" />
+                                    
+                                    @if (item.Type == "textarea")
+                                    {
+                                        <textarea name="value" class="form-control form-control-sm" placeholder="New value" required></textarea>
+                                    }
+                                    else if (item.Name == "managerID")
+                                    {
+                                        <select name="value" class="form-select form-select-sm" required>
+                                            <option value="">Select Manager</option>
+                                            @if (ViewBag.Managers != null)
+                                            {
+                                                foreach (var mgr in (List<DTOs.EmployeeSummaryDTO>)ViewBag.Managers)
+                                                {
+                                                    <option value="@mgr.EmployeeID" selected="@(item.Value != null && item.Value.ToString() == mgr.EmployeeID.ToString())">
+                                                        @mgr.FullName (@mgr.PositionTitle)
+                                                    </option>
+                                                }
+                                            }
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        <input type="@item.Type" name="value" class="form-control form-control-sm" placeholder="New value" required />
+                                    }
+                                    
+                                    <button type="submit" class="btn btn-dark btn-sm">Update</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

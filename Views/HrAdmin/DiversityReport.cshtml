@@ -1,0 +1,111 @@
+@model DTOs.DiversityReportDTO
+@{
+    ViewData["Title"] = "Diversity & Compliance Report";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Diversity Report</h1>
+    <p class="text-muted mb-4">Workforce demographics and profile compliance overview.</p>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body text-center py-4">
+                    <p class="text-muted small mb-2">Total Active Employees</p>
+                    <h2 class="display-5 fw-bold mb-0">@Model.ComplianceStats.TotalActive</h2>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body text-center py-4">
+                    <p class="text-muted small mb-2">Avg. Profile Completion</p>
+                    <h2 class="display-5 fw-bold mb-0">@Model.ComplianceStats.AverageCompletion.ToString("F1")%</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body text-center py-4">
+                    <p class="text-muted small mb-2">Fully Compliant Profiles</p>
+                    <h2 class="display-5 fw-bold mb-0">@Model.ComplianceStats.FullyCompliant</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0 fw-bold">Nationality Distribution</h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2" style="height: 300px;">
+                        <canvas id="nationalityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0 fw-bold">Age Demographics</h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-bar" style="height: 300px;">
+                        <canvas id="ageChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Nationality Chart
+        var ctxNat = document.getElementById("nationalityChart");
+        new Chart(ctxNat, {
+            type: 'doughnut',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.NationalityStats.Select(x => x.Country))),
+                datasets: [{
+                    data: @Html.Raw(Json.Serialize(Model.NationalityStats.Select(x => x.Count))),
+                    backgroundColor: ['#212529', '#495057', '#6c757d', '#adb5bd', '#dee2e6', '#343a40'],
+                    hoverBorderColor: "rgba(255, 255, 255, 1)",
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: { legend: { display: true, position: 'bottom' } },
+                cutout: '70%',
+            },
+        });
+
+        // Age Chart
+        var ctxAge = document.getElementById("ageChart");
+        new Chart(ctxAge, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.AgeStats.Select(x => x.AgeGroup))),
+                datasets: [{
+                    label: "Employees",
+                    backgroundColor: "#212529",
+                    data: @Html.Raw(Json.Serialize(Model.AgeStats.Select(x => x.Count))),
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+}

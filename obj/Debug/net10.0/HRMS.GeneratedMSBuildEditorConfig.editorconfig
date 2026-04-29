@@ -1,0 +1,255 @@
+is_global = true
+build_property.TargetFramework = net10.0
+build_property.TargetFramework = net10.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.RootNamespace = HRMS
+build_property.RootNamespace = HRMS
+build_property.ProjectDir = C:\Users\Joe Mohd\Downloads\OneDrive_2026-01-28\D Drive for reset\Completed University Projects\Databases Project\HRMS\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Joe Mohd\Downloads\OneDrive_2026-01-28\D Drive for reset\Completed University Projects\Databases Project\HRMS
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Account/RegisterSuccess.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3RlclN1Y2Nlc3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Employee/Attendance.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcQXR0ZW5kYW5jZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Employee/LeaveHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcTGVhdmVIaXN0b3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Employee/Missions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcTWlzc2lvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Employee/OrgHierarchy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcT3JnSGllcmFyY2h5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Employee/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcUHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Employee/RequestCorrection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcUmVxdWVzdENvcnJlY3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Employee/RequestLeave.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcUmVxdWVzdExlYXZlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Employee/ViewRules.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcVmlld1J1bGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Error/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXJyb3JcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Home/Attendance.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBdHRlbmRhbmNlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Home/Contract.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb250cmFjdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Home/EmployeeDirectory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFbXBsb3llZURpcmVjdG9yeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Home/Employees.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFbXBsb3llZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Home/Hierarchy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxIaWVyYXJjaHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Home/Leave.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMZWF2ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Home/Mission.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNaXNzaW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Home/Shift.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTaGlmdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/AssignMission.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxBc3NpZ25NaXNzaW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/AttendanceRules.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxBdHRlbmRhbmNlUnVsZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/Contracts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxDb250cmFjdHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/CreateContract.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxDcmVhdGVDb250cmFjdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/DepartmentStats.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxEZXBhcnRtZW50U3RhdHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/DiversityReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxEaXZlcnNpdHlSZXBvcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/EditEntitlements.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxFZGl0RW50aXRsZW1lbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/EditLeavePolicy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxFZGl0TGVhdmVQb2xpY3kuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/EditLeaveType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxFZGl0TGVhdmVUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/EditProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxFZGl0UHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/ExpiringContracts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxFeHBpcmluZ0NvbnRyYWN0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/ManageEntitlements.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxNYW5hZ2VFbnRpdGxlbWVudHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/ManageLeavePolicies.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxNYW5hZ2VMZWF2ZVBvbGljaWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/ManageLeaveRequests.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxNYW5hZ2VMZWF2ZVJlcXVlc3RzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/ManageLeaveTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxNYW5hZ2VMZWF2ZVR5cGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/HrAdmin/ShiftScheduler.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHJBZG1pblxTaGlmdFNjaGVkdWxlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Manager/AssignTeamShift.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxBc3NpZ25UZWFtU2hpZnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Manager/LeaveRequests.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxMZWF2ZVJlcXVlc3RzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Manager/MissionRequests.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxNaXNzaW9uUmVxdWVzdHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Manager/MyTeam.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxNeVRlYW0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Manager/SendNotification.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxTZW5kTm90aWZpY2F0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Manager/TeamAttendance.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxUZWFtQXR0ZW5kYW5jZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/SystemAdmin/AssignRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3lzdGVtQWRtaW5cQXNzaWduUm9sZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/SystemAdmin/AssignShift.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3lzdGVtQWRtaW5cQXNzaWduU2hpZnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/SystemAdmin/CreateEmployee.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3lzdGVtQWRtaW5cQ3JlYXRlRW1wbG95ZWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/SystemAdmin/ManageEmployeeShifts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3lzdGVtQWRtaW5cTWFuYWdlRW1wbG95ZWVTaGlmdHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/SystemAdmin/ReassignEmployee.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3lzdGVtQWRtaW5cUmVhc3NpZ25FbXBsb3llZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/SystemAdmin/ShiftTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3lzdGVtQWRtaW5cU2hpZnRUeXBlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joe Mohd/Downloads/OneDrive_2026-01-28/D Drive for reset/Completed University Projects/Databases Project/HRMS/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-do5ohm3euk

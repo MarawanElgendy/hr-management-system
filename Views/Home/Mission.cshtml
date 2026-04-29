@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Mission";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-5 fw-light">Mission</h1>
+
+    @* Personal Section *@
+    <h4 class="mb-3 fw-normal">Personal</h4>
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">My Missions</h5>
+                    <p class="card-text text-muted small">View your current and past mission assignments.</p>
+                    <a asp-controller="Employee" asp-action="Missions" class="btn btn-outline-dark w-100 stretched-link">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Management Section *@
+    @if (User.IsInRole("HRAdministrator") || User.IsInRole("LineManager"))
+    {
+        <hr class="my-5" />
+        <h4 class="mb-3 fw-normal">Management</h4>
+        <div class="row g-4">
+            
+            @if (User.IsInRole("HRAdministrator"))
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Assign Mission</h5>
+                            <p class="card-text text-muted small">Dispatch employees on new missions.</p>
+                            <a asp-controller="HRAdmin" asp-action="AssignMission" class="btn btn-dark w-100 stretched-link">Assign</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (User.IsInRole("LineManager"))
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Mission Requests</h5>
+                            <p class="card-text text-muted small">Review and approve mission proposals from your team.</p>
+                            <a asp-controller="Manager" asp-action="MissionRequests" class="btn btn-dark w-100 stretched-link">Review</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

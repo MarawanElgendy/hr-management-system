@@ -1,0 +1,102 @@
+@model List<DTOs.TeamAttendanceDTO>
+
+@{
+    ViewData["Title"] = "Team Attendance";
+    var start = (DateTime)ViewBag.StartDate;
+    var end = (DateTime)ViewBag.EndDate;
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Team Attendance</h1>
+    <p class="text-muted mb-4">Monitor daily attendance for your direct reports.</p>
+
+    @* Filter Form *@
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label for="startDate" class="form-label small text-muted">From</label>
+                    <input type="date" class="form-control" name="startDate" id="startDate" value="@start.ToString("yyyy-MM-dd")">
+                </div>
+                <div class="col-md-4">
+                    <label for="endDate" class="form-label small text-muted">To</label>
+                    <input type="date" class="form-control" name="endDate" id="endDate" value="@end.ToString("yyyy-MM-dd")">
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-dark w-100">Filter Records</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @* Results Table *@
+    @if (Model != null && Model.Any())
+    {
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-0">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Date</th>
+                            <th>Shift</th>
+                            <th>Scheduled</th>
+                            <th>In</th>
+                            <th>Out</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="fw-bold">@item.EmployeeName</td>
+                                <td>@item.ShiftDate.ToString("ddd, dd MMM")</td>
+                                <td><span class="badge bg-dark">@item.ShiftName</span></td>
+                                <td class="small">@item.StartTime.ToString(@"hh\:mm") - @item.EndTime.ToString(@"hh\:mm")</td>
+                                <td>
+                                    @if (item.EntryTime.HasValue)
+                                    {
+                                        @item.EntryTime.Value.ToString("HH:mm")
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">-</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.ExitTime.HasValue)
+                                    {
+                                        @item.ExitTime.Value.ToString("HH:mm")
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">-</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.DurationMinutes.HasValue)
+                                    {
+                                        <strong>@item.DurationMinutes min</strong>
+                                    }
+                                    else
+                                    {
+                                        <span>-</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center py-5">
+                <p class="text-muted mb-0">No attendance records found for this date range.</p>
+            </div>
+        </div>
+    }
+</div>

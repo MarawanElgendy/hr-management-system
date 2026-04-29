@@ -1,0 +1,61 @@
+@model List<DepartmentStatisticsDTO>
+@{
+    ViewData["Title"] = "Department Statistics";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Department Statistics</h1>
+    <p class="text-muted mb-4">Workforce distribution and key metrics across departments.</p>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Department Name</th>
+                            <th>Department Head</th>
+                            <th class="text-center">Team Size</th>
+                            <th class="text-end">Average Salary</th>
+                            <th class="text-center">Span of Control</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var dept in Model)
+                            {
+                                <tr>
+                                    <td class="fw-bold">@dept.DepartmentName</td>
+                                    <td>
+                                        @if(dept.HeadName == "N/A")
+                                        {
+                                            <span class="text-muted fst-italic">Vacant</span>
+                                        }
+                                        else
+                                        {
+                                            @dept.HeadName
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge bg-dark">@dept.TeamSize</span>
+                                    </td>
+                                    <td class="text-end">@dept.AverageSalary.ToString("C0")</td>
+                                    <td class="text-center">
+                                        @dept.SpanOfControl.ToString("F1") <small class="text-muted">emp/mgr</small>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">No department data available.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+@model List<DTOs.EmployeeSummaryDTO>
+@{
+    ViewData["Title"] = "Employee Directory";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Employee Directory</h1>
+    <p class="text-muted mb-4">Browse and search all employees in the organization.</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label small text-muted">Search</label>
+                    <input type="text" name="search" class="form-control" placeholder="Name, Email, Position..." value="@ViewBag.Search" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small text-muted">Department</label>
+                    <select name="department" class="form-select">
+                        <option value="">All Departments</option>
+                        @if (ViewBag.Departments != null)
+                        {
+                            foreach (var dept in ViewBag.Departments)
+                            {
+                                <option value="@dept.DepartmentId" selected="@(ViewBag.SelectedDept == dept.DepartmentId)">@dept.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-dark w-100">Filter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Department</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var emp in Model)
+                            {
+                                <tr>
+                                    <td>@emp.EmployeeID</td>
+                                    <td class="fw-bold">@emp.FullName</td>
+                                    <td class="text-muted">@emp.PositionTitle</td>
+                                    <td>@emp.DepartmentName</td>
+                                    <td><a href="mailto:@emp.EmailAddress" class="text-dark">@emp.EmailAddress</a></td>
+                                    <td>
+                                        <a asp-controller="Employee" asp-action="Profile" asp-route-id="@emp.EmployeeID" class="btn btn-sm btn-outline-dark">View</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-muted">No employees found.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

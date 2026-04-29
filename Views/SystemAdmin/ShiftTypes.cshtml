@@ -1,0 +1,91 @@
+@model List<DTOs.ShiftConfigurationDTO>
+@{
+    ViewData["Title"] = "Shift Types";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-light mb-1">Shift Configuration</h1>
+            <p class="text-muted mb-0">Define standard shift timings and allowances.</p>
+        </div>
+        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createShiftModal">
+            Create Shift Type
+        </button>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Shift Type</th>
+                            <th>Allowance Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var shift in Model)
+                            {
+                                <tr>
+                                    <td class="fw-bold">@shift.ShiftType</td>
+                                    <td>@shift.AllowanceAmount.ToString("C")</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="2" class="text-center py-4 text-muted">
+                                    No shift types configured.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Create Shift Modal *@
+<div class="modal fade" id="createShiftModal" tabindex="-1" aria-labelledby="createShiftModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="createShiftModalLabel">Create Shift Type</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="CreateShiftType" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="shiftType" class="form-label small text-muted">Shift Type Name</label>
+                        <input type="text" class="form-control" id="shiftType" name="shiftType" required placeholder="e.g. Morning, Night, Weekend">
+                    </div>
+                    <div class="mb-3">
+                        <label for="allowanceAmount" class="form-label small text-muted">Allowance Amount</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" step="0.01" class="form-control" id="allowanceAmount" name="allowanceAmount" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-dark">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

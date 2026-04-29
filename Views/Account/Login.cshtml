@@ -1,0 +1,28 @@
+@{
+    ViewData["Title"] = "Log In";
+}
+<div class="login-container">
+    <div class="login-card">
+        <h1>Log In</h1>
+
+        <form asp-action="Login" method="post">
+            <div class="mb-3">
+                <label>Employee ID</label>
+                <input type="number" name="employeeID" class="form-control" required placeholder="Enter your ID" />
+            </div>
+
+            <button type="submit" class="btn btn-login">Sign In</button>
+        </form>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger mt-3 py-2 text-center" style="font-size: 0.9rem;">
+                Invalid Employee ID
+            </div>
+        }
+
+        <div class="login-footer">
+            <p>New here? <a asp-action="Register">Create an account</a></p>
+        </div>
+    </div>
+</div>

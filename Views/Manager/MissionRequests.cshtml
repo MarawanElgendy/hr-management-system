@@ -1,0 +1,74 @@
+@model List<DTOs.MissionDTO>
+@{
+    ViewData["Title"] = "Mission Requests";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-light">Mission Requests</h1>
+    <p class="text-muted mb-4">Review and approve mission proposals from your team.</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center py-5">
+                <p class="text-muted mb-0">You have no pending mission requests.</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Assignee</th>
+                                <th>Destination</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var mission in Model)
+                            {
+                                <tr>
+                                    <td class="fw-bold">@mission.EmployeeName</td>
+                                    <td>@mission.Destination</td>
+                                    <td>@mission.StartDate.ToShortDateString()</td>
+                                    <td>@mission.EndDate.ToShortDateString()</td>
+                                    <td>
+                                        <span class="badge bg-light text-dark border">@mission.Status</span>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="d-flex justify-content-end gap-1">
+                                            <form asp-action="ApproveMission" method="post" onsubmit="return confirm('Approve this mission?');">
+                                                <input type="hidden" name="missionID" value="@mission.MissionID" />
+                                                <button type="submit" class="btn btn-sm btn-dark">Approve</button>
+                                            </form>
+                                            <form asp-action="RejectMission" method="post" onsubmit="return confirm('Reject this request?');">
+                                                <input type="hidden" name="missionID" value="@mission.MissionID" />
+                                                <button type="submit" class="btn btn-sm btn-outline-dark">Reject</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>

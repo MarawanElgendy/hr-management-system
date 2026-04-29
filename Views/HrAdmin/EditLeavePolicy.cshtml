@@ -1,0 +1,51 @@
+@model HRMS.Models.LeavePolicy
+@{
+    ViewData["Title"] = Model.LeavePolicyId == 0 ? "Create Leave Policy" : "Edit Leave Policy";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-light mb-1">@ViewData["Title"]</h1>
+            <p class="text-muted mb-0">Configure leave policy rules and eligibility.</p>
+        </div>
+        <a asp-action="ManageLeavePolicies" class="btn btn-outline-dark">Back</a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <form asp-action="EditLeavePolicy" method="post">
+                        <input type="hidden" asp-for="LeavePolicyId" />
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Name" class="form-label small text-muted">Policy Name</label>
+                                <input asp-for="Name" class="form-control" required placeholder="e.g. Standard Vacation" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="NoticePeriod" class="form-label small text-muted">Notice Period (Days)</label>
+                                <input asp-for="NoticePeriod" type="number" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Purpose" class="form-label small text-muted">Purpose</label>
+                            <textarea asp-for="Purpose" class="form-control" rows="2"></textarea>
+                        </div>
+
+                        <div class="form-check mb-4">
+                            <input type="checkbox" class="form-check-input" id="ResetOnNewYear" name="ResetOnNewYear" value="true" @(Model.ResetOnNewYear.GetValueOrDefault() ? "checked" : "") />
+                            <label for="ResetOnNewYear" class="form-check-label">Reset Balances on New Year?</label>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-dark btn-lg">Save Policy</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

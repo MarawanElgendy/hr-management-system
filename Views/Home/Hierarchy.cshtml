@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Hierarchy";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-5 fw-light">Hierarchy</h1>
+
+    @* Personal Section *@
+    <h4 class="mb-3 fw-normal">Personal</h4>
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Hierarchy</h5>
+                    <p class="card-text text-muted small">Visualize the organizational structure and reporting lines.</p>
+                    <a asp-controller="Employee" asp-action="OrgHierarchy" class="btn btn-outline-dark w-100 stretched-link">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Management Section *@
+    @if (User.IsInRole("SystemAdministrator"))
+    {
+        <hr class="my-5" />
+        <h4 class="mb-3 fw-normal">Management</h4>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Reassign Reporting</h5>
+                        <p class="card-text text-muted small">Update employee managers or department assignments.</p>
+                        <a asp-controller="SystemAdmin" asp-action="ReassignEmployee" class="btn btn-dark w-100 stretched-link">Reassign</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
